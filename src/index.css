@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-ink antialiased;
+    font-family: theme('fontFamily.sans');
+    margin: 0;
+    /* Latin body copy only; Arabic overrides below reset this to normal. */
+    letter-spacing: -0.006em;
+  }
+
+  /* ---- Arabic typography (see Rule 1–3: never negative tracking, real Arabic
+     font stack, generous line-height so diacritics never clip) ---- */
+  html[dir='rtl'] body,
+  html[dir='rtl'] input,
+  html[dir='rtl'] textarea,
+  html[dir='rtl'] button {
+    font-family: theme('fontFamily.ar');
+    letter-spacing: normal;
+  }
+
+  html[dir='rtl'] .font-display {
+    font-family: theme('fontFamily.arDisplay');
+    letter-spacing: normal;
+    line-height: 1.32;
+  }
+
+  html[dir='rtl'] h1,
+  html[dir='rtl'] h2,
+  html[dir='rtl'] h3 {
+    letter-spacing: normal;
+    line-height: 1.32;
+  }
+
+  html[dir='rtl'] p,
+  html[dir='rtl'] li,
+  html[dir='rtl'] label {
+    line-height: 1.75;
+  }
+
+  /* Never fake-italicise or case-transform Arabic. */
+  html[dir='rtl'] em,
+  html[dir='rtl'] i {
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  html[dir='rtl'] .uppercase {
+    text-transform: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.gold.DEFAULT');
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Isolate Latin words/numbers embedded in Arabic so bidi never reorders them. */
+  .ltr {
+    display: inline-block;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  .eyebrow {
+    @apply text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-ink-muted;
+  }
+
+  html[dir='rtl'] .eyebrow {
+    letter-spacing: normal;
+    @apply text-[0.75rem] tracking-normal;
+  }
+
+  .hairline {
+    @apply border border-line;
+  }
+
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-full px-6 py-3
+      text-[0.94rem] font-medium transition-all duration-300 ease-premium
+      active:scale-[0.985] disabled:pointer-events-none disabled:opacity-40;
+    min-height: 48px;
+  }
+
+  .btn-primary {
+    @apply btn bg-ink text-white shadow-card hover:bg-gold-deep hover:shadow-lift;
+  }
+
+  .btn-gold {
+    @apply btn bg-gold text-white shadow-card hover:bg-gold-deep hover:shadow-lift;
+  }
+
+  .btn-ghost {
+    @apply btn border border-line-strong bg-white/70 text-ink hover:border-gold hover:bg-gold-wash;
+  }
+
+  .btn-quiet {
+    @apply btn px-4 text-ink-muted hover:text-ink;
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-white shadow-card;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[0.95rem] text-ink
+      outline-none transition-colors duration-200 placeholder:text-ink-muted/60
+      focus:border-gold;
+    min-height: 48px;
+  }
+
+  .gold-rule {
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      theme('colors.gold.light'),
+      theme('colors.gold.DEFAULT'),
+      theme('colors.gold.light'),
+      transparent
+    );
+  }
+}
+
+/* Elegant, non-jarring scrollbar for the desktop presentation build. */
+@media (min-width: 1024px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f2ece3;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d6ccbc;
+    border-radius: 999px;
+    border: 3px solid #f2ece3;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b0863c;
+  }
+}
