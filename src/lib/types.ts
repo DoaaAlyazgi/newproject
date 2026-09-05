@@ -85,7 +85,8 @@ export type ArtKind =
   | 'plaque-shield'
   | 'plaque-round'
   | 'plaque-box'
-  | 'bobblehead';
+  | 'bobblehead'
+  | 'kuwait-tower';
 
 export type MetalTone = 'gold' | 'silver' | 'bronze' | 'crystal' | 'wood' | 'resin';
 

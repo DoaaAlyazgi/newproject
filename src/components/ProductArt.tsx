@@ -49,6 +49,7 @@ const FRAME: Record<ArtKind, { h: number; shadowY: number; shadowR: number; dy?:
   'plaque-round': { h: 200, shadowY: 193, shadowR: 52 },
   'plaque-box': { h: 196, shadowY: 189, shadowR: 62 },
   bobblehead: { h: 204, shadowY: 197, shadowR: 44 },
+  'kuwait-tower': { h: 220, shadowY: 213, shadowR: 48 },
 };
 
 interface Props {
@@ -143,6 +144,7 @@ export default function ProductArt({ art, tone, ribbon, variant, className = '' 
       {art === 'plaque-round' && <PlaqueRoundArt g={g} tone={t} />}
       {art === 'plaque-box' && <PlaqueBoxArt g={g} tone={t} />}
       {art === 'bobblehead' && <BobbleheadArt g={g} variant={variant} />}
+      {art === 'kuwait-tower' && <KuwaitTowerArt g={g} gs={gs} tone={t} />}
       </g>
     </svg>
   );
@@ -838,6 +840,35 @@ function PlaqueBoxArt({ g, tone }: { g: string; tone: Tone }) {
       ))}
       <path d="M62 124 L78 124 L64 152 Z" fill="#FFFFFF" opacity="0.28" />
       <rect x="36" y="172" width="128" height="8" rx="2" fill="#3A342C" />
+    </g>
+  );
+}
+
+/** The Kuwait Towers — main mast with two spheres, a smaller companion mast beside it. */
+function KuwaitTowerArt({ g, gs, tone }: { g: string; gs: string; tone: Tone }) {
+  return (
+    <g>
+      {/* companion mast, shorter and set behind */}
+      <path d="M136 200 L140 90 L146 90 L150 200 Z" fill={tone.c} opacity="0.75" />
+      <circle cx="143" cy="82" r="9" fill={tone.c} opacity="0.85" />
+
+      {/* main mast */}
+      <path d="M92 204 L97 60 L103 40 L109 60 L114 204 Z" fill={`url(#${g})`} />
+      <path d="M97 204 L100 70 L103 204 Z" fill={`url(#${gs})`} opacity="0.6" />
+      <path d="M92 204 L97 60 L103 40" fill="none" stroke="#FFFFFF" strokeWidth="1.6" opacity="0.4" />
+
+      {/* large sphere (restaurant deck) */}
+      <circle cx="103" cy="120" r="26" fill={`url(#${g})`} />
+      <circle cx="103" cy="120" r="26" fill="none" stroke={tone.rim} strokeWidth="1.1" opacity="0.6" />
+      <ellipse cx="103" cy="120" rx="26" ry="8" fill="none" stroke={tone.rim} strokeWidth="0.8" opacity="0.4" />
+      <ellipse cx="94" cy="110" rx="8" ry="4.5" fill="#FFFFFF" opacity="0.4" transform="rotate(-25 94 110)" />
+
+      {/* small upper sphere (water tank) */}
+      <circle cx="105" cy="66" r="12" fill={`url(#${g})`} />
+      <circle cx="105" cy="66" r="12" fill="none" stroke={tone.rim} strokeWidth="1" opacity="0.55" />
+
+      <rect x="70" y="204" width="66" height="10" rx="2" fill="#2B2620" />
+      <rect x="60" y="214" width="86" height="8" rx="2" fill="#3A342C" />
     </g>
   );
 }
