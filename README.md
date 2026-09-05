@@ -82,14 +82,23 @@ appears alongside two medals rather than a third medal.
 
 ## Product data
 
-`src/data/products.ts` holds 21 items — names and prices taken from the public
-Global Medal catalogue and used here as **demonstration data**. Prices in KD may
-change and availability is **not live**; the UI says so on every screen.
+`src/data/products.ts` holds 35 items across seven categories — medals,
+trophies, crystal awards, wooden plaques, world-renowned trophies, VIP gifts and
+bobble heads. Names and prices are taken from the public Global Medal catalogue
+and used here as **demonstration data**. Where the catalogue shows an item
+reduced, the was-price is carried in `compareAt` and struck through in the UI,
+the way the store presents it. Prices in KD may change and availability is
+**not live**; the UI says so on every screen. Sold-out status is deliberately
+not shown — availability is exactly what the Global Medal team confirms when
+they review a request.
 
 Two rules were followed when building the dataset, and should be kept:
 
 - `supportsLogo` / `supportsEngraving` are true because Global Medal publicly
   offers in-house engraving and logo customisation across its award range.
+- Items sold as finished pieces (the bobblehead figurines) carry
+  `customizable: false`, and the product screen says the team confirms whether
+  any personalisation is possible rather than offering an engraving field.
 - `hasVerifiedVariants` is true **only** where the catalogue lists selectable
   colour/ribbon variants on the product page (currently The Classic Weave Medal:
   gold/silver/bronze, and blue/black/red/white/orange/green/Kuwait-flag ribbons).

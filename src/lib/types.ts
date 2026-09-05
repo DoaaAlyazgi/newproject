@@ -60,8 +60,10 @@ export type CategoryId =
   | 'medals'
   | 'trophies'
   | 'crystal'
+  | 'plaques'
   | 'vip'
-  | 'replica';
+  | 'replica'
+  | 'bobbleheads';
 
 /** Illustration family used by the ProductArt renderer. */
 export type ArtKind =
@@ -75,9 +77,17 @@ export type ArtKind =
   | 'crystal-star'
   | 'crystal-ball'
   | 'dhow'
-  | 'replica-cup';
+  | 'replica-cup'
+  | 'replica-mini'
+  | 'resin-figure'
+  | 'ball-column'
+  | 'plaque'
+  | 'plaque-shield'
+  | 'plaque-round'
+  | 'plaque-box'
+  | 'bobblehead';
 
-export type MetalTone = 'gold' | 'silver' | 'bronze' | 'crystal' | 'wood';
+export type MetalTone = 'gold' | 'silver' | 'bronze' | 'crystal' | 'wood' | 'resin';
 
 export interface Product {
   id: string;
@@ -87,6 +97,8 @@ export interface Product {
   price: number;
   /** Present when the catalogue lists the item as a range (size/variant based). */
   priceRange?: { min: number; max: number };
+  /** Was-price, present only where the catalogue shows the item reduced. */
+  compareAt?: number;
   description: Bi;
   occasion: OccasionId[];
   recipients: RecipientId[];

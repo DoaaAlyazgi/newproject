@@ -1,5 +1,7 @@
 import { useEffect, type ReactNode } from 'react';
+import { formatKD } from '../data/products';
 import { useStore } from '../lib/store';
+import type { Product } from '../lib/types';
 
 /* ------------------------------- brand mark ------------------------------- */
 
@@ -230,6 +232,55 @@ export function Chip({
     >
       {label}
     </button>
+  );
+}
+
+/* ------------------------------- price tag -------------------------------- */
+
+/**
+ * Prices are shown the way the Global Medal catalogue shows them: three
+ * decimals, a range where the item is sold in several sizes, and the was-price
+ * struck through where the catalogue lists the item reduced.
+ */
+export function PriceTag({
+  product,
+  size = 'md',
+  showSaleBadge = true,
+}: {
+  product: Product;
+  size?: 'sm' | 'md' | 'lg';
+  showSaleBadge?: boolean;
+}) {
+  const { t, n } = useStore();
+  const scale = {
+    sm: 'text-[0.86rem]',
+    md: 'text-[1.15rem]',
+    lg: 'text-[1.7rem]',
+  }[size];
+
+  return (
+    <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <span className={`font-display font-semibold text-gold-deep ${scale}`}>
+        <span className="ltr">
+          {product.priceRange
+            ? `${n(formatKD(product.priceRange.min))}–${n(formatKD(product.priceRange.max))}`
+            : n(formatKD(product.price))}
+        </span>
+      </span>
+      <span className="text-[0.76rem] font-medium text-ink-muted">{t('chrome.kd')}</span>
+      {product.compareAt && (
+        <>
+          <span className="text-[0.76rem] text-ink-muted line-through decoration-ink-muted/50">
+            <span className="ltr">{n(formatKD(product.compareAt))}</span>
+          </span>
+          {showSaleBadge && (
+            <span className="rounded-full bg-[#E3EFE6] px-2 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-[#1F6B45]">
+              {t('product.sale')}
+            </span>
+          )}
+        </>
+      )}
+    </span>
   );
 }
 

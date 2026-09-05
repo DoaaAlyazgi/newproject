@@ -87,6 +87,7 @@ export default function Summary() {
                   <ProductArt
                     art={selected.art}
                     tone={personalization.metal ?? selected.tone}
+                    variant={selected.id}
                     ribbon={personalization.ribbon}
                     className="mx-auto h-40 w-full"
                   />

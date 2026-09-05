@@ -1,11 +1,10 @@
 import { useMemo, useState } from 'react';
 import { useStore } from '../lib/store';
 import { alsoConsider, recommend } from '../lib/recommend';
-import { formatKD } from '../data/products';
 import type { Product, Recommendation } from '../lib/types';
 import ProductArt from '../components/ProductArt';
 import ProductDetails from '../components/ProductDetails';
-import { ExpertNudge, Notice, PrototypeFooter, ScreenTitle } from '../components/ui';
+import { ExpertNudge, Notice, PriceTag, PrototypeFooter, ScreenTitle } from '../components/ui';
 
 const BADGE_STYLE: Record<Recommendation['badge'], string> = {
   best: 'bg-ink text-white',
@@ -126,6 +125,7 @@ export default function Recommendations() {
                 <ProductArt
                   art={rec.product.art}
                   tone={rec.product.tone}
+                  variant={rec.product.id}
                   className="mx-auto h-44 w-full transition-transform duration-500 ease-premium group-hover:scale-[1.04] sm:h-52"
                 />
               </div>
@@ -135,22 +135,9 @@ export default function Recommendations() {
                   {rec.product.name[lang]}
                 </h2>
 
-                <div className="mt-1.5 flex items-baseline gap-2">
-                  {rec.product.priceRange ? (
-                    <span className="font-display text-[1.15rem] font-semibold text-gold-deep">
-                      <span className="ltr">
-                        {n(formatKD(rec.product.priceRange.min))}–
-                        {n(formatKD(rec.product.priceRange.max))}
-                      </span>
-                    </span>
-                  ) : (
-                    <span className="font-display text-[1.15rem] font-semibold text-gold-deep">
-                      <span className="ltr">{n(formatKD(rec.product.price))}</span>
-                    </span>
-                  )}
-                  <span className="text-[0.78rem] text-ink-muted">
-                    {t('chrome.kd')} · {t('chrome.perItem')}
-                  </span>
+                <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2">
+                  <PriceTag product={rec.product} />
+                  <span className="text-[0.78rem] text-ink-muted">{t('chrome.perItem')}</span>
                 </div>
 
                 <p className="mt-3 text-[0.86rem] leading-relaxed text-ink-muted">
@@ -237,13 +224,14 @@ export default function Recommendations() {
                   <ProductArt
                     art={p.art}
                     tone={p.tone}
+                    variant={p.id}
                     className="mx-auto h-24 w-full transition-transform duration-500 group-hover:scale-105"
                   />
                   <span className="mt-2 block text-[0.76rem] font-semibold leading-snug text-ink">
                     {p.name[lang]}
                   </span>
-                  <span className="mt-0.5 block text-[0.72rem] text-ink-muted">
-                    <span className="ltr">{n(formatKD(p.price))}</span> {t('chrome.kd')}
+                  <span className="mt-0.5 block">
+                    <PriceTag product={p} size="sm" showSaleBadge={false} />
                   </span>
                 </button>
               ))}

@@ -3,7 +3,7 @@ import { formatKD } from '../data/products';
 import type { Product } from '../lib/types';
 import ProductArt from './ProductArt';
 import PersonalizationPreview from './PersonalizationPreview';
-import { Modal, Notice } from './ui';
+import { Modal, Notice, PriceTag } from './ui';
 
 const RIBBON_SWATCH: Record<string, string> = {
   blue: '#1F4E8C',
@@ -83,29 +83,14 @@ export default function ProductDetails({
             <ProductArt
               art={product.art}
               tone={personalization.metal ?? product.tone}
+              variant={product.id}
               ribbon={personalization.ribbon}
               className="mx-auto h-56 w-full transition-all duration-500 ease-premium sm:h-72"
             />
           </div>
 
-          <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            {product.priceRange ? (
-              <>
-                <span className="text-[0.75rem] text-ink-muted">{t('product.from')}</span>
-                <span className="font-display text-[1.6rem] font-semibold text-ink">
-                  <span className="ltr">{n(formatKD(product.priceRange.min))}</span>
-                </span>
-                <span className="text-ink-muted">–</span>
-                <span className="font-display text-[1.6rem] font-semibold text-ink">
-                  <span className="ltr">{n(formatKD(product.priceRange.max))}</span>
-                </span>
-              </>
-            ) : (
-              <span className="font-display text-[1.7rem] font-semibold text-ink">
-                <span className="ltr">{n(formatKD(product.price))}</span>
-              </span>
-            )}
-            <span className="text-[0.85rem] font-medium text-ink-muted">{t('chrome.kd')}</span>
+          <div className="mt-5">
+            <PriceTag product={product} size="lg" />
           </div>
 
           <p className="mt-3 text-[0.9rem] leading-relaxed text-ink-soft">
@@ -185,31 +170,39 @@ export default function ProductDetails({
               ) : null}
             </>
           ) : (
-            <div className="mb-6">
-              <div className="eyebrow mb-3">{t('product.options')}</div>
-              <Notice tone="neutral">{t('product.optionsUnverified')}</Notice>
-            </div>
+            product.customizable && (
+              <div className="mb-6">
+                <div className="eyebrow mb-3">{t('product.options')}</div>
+                <Notice tone="neutral">{t('product.optionsUnverified')}</Notice>
+              </div>
+            )
           )}
 
           <fieldset className="mb-6">
             <legend className="eyebrow mb-3">{t('product.customization')}</legend>
-            <label
-              htmlFor="engraving"
-              className="mb-1.5 block text-[0.82rem] font-medium text-ink-soft"
-            >
-              {t('product.engravingText')}
-            </label>
-            <input
-              id="engraving"
-              className="field"
-              maxLength={48}
-              placeholder={t('product.engravingPlaceholder')}
-              value={personalization.engravingText}
-              onChange={(e) => setPersonalization({ engravingText: e.target.value })}
-            />
-            <p className="mt-2 text-[0.76rem] leading-relaxed text-ink-muted">
-              {t('product.supportsBoth')}
-            </p>
+            {product.supportsEngraving ? (
+              <>
+                <label
+                  htmlFor="engraving"
+                  className="mb-1.5 block text-[0.82rem] font-medium text-ink-soft"
+                >
+                  {t('product.engravingText')}
+                </label>
+                <input
+                  id="engraving"
+                  className="field"
+                  maxLength={48}
+                  placeholder={t('product.engravingPlaceholder')}
+                  value={personalization.engravingText}
+                  onChange={(e) => setPersonalization({ engravingText: e.target.value })}
+                />
+                <p className="mt-2 text-[0.76rem] leading-relaxed text-ink-muted">
+                  {t('product.supportsBoth')}
+                </p>
+              </>
+            ) : (
+              <Notice tone="neutral">{t('product.notCustomizable')}</Notice>
+            )}
           </fieldset>
 
           <fieldset className="mb-6">
@@ -236,7 +229,9 @@ export default function ProductDetails({
             </div>
           </fieldset>
 
-          <PersonalizationPreview product={product} personalization={personalization} />
+          {product.customizable && (
+            <PersonalizationPreview product={product} personalization={personalization} />
+          )}
 
           <div className="mt-6 rounded-2xl border border-line bg-white p-4">
             <div className="flex items-baseline justify-between gap-3">

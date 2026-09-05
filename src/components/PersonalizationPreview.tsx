@@ -40,6 +40,7 @@ export default function PersonalizationPreview({
           <ProductArt
             art={product.art}
             tone={tone}
+            variant={product.id}
             ribbon={ribbon}
             className="h-40 w-28 shrink-0 drop-shadow-sm transition-all duration-500 ease-premium sm:h-48 sm:w-32"
           />

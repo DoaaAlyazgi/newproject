@@ -1,18 +1,20 @@
 import { useMemo, useState } from 'react';
 import { useStore } from '../lib/store';
-import { formatKD, products } from '../data/products';
+import { products } from '../data/products';
 import type { CategoryId, Product } from '../lib/types';
 import ProductArt from '../components/ProductArt';
 import ProductDetails from '../components/ProductDetails';
-import { PrototypeFooter, ScreenTitle } from '../components/ui';
+import { PriceTag, PrototypeFooter, ScreenTitle } from '../components/ui';
 
 const CATEGORIES: (CategoryId | 'all')[] = [
   'all',
   'medals',
   'trophies',
   'crystal',
+  'plaques',
   'replica',
   'vip',
+  'bobbleheads',
 ];
 
 export default function Catalog() {
@@ -76,6 +78,7 @@ export default function Catalog() {
                 <ProductArt
                   art={p.art}
                   tone={p.tone}
+                  variant={p.id}
                   className="mx-auto h-32 w-full transition-transform duration-500 ease-premium group-hover:scale-105 sm:h-36"
                 />
               </div>
@@ -85,13 +88,8 @@ export default function Catalog() {
               <span className="mt-1 text-[0.9rem] font-semibold leading-snug text-ink">
                 {p.name[lang]}
               </span>
-              <span className="mt-auto pt-2 font-display text-[1.02rem] font-semibold text-gold-deep">
-                <span className="ltr">
-                  {p.priceRange
-                    ? `${n(formatKD(p.priceRange.min))}–${n(formatKD(p.priceRange.max))}`
-                    : n(formatKD(p.price))}
-                </span>{' '}
-                <span className="text-[0.74rem] font-medium text-ink-muted">{t('chrome.kd')}</span>
+              <span className="mt-auto pt-2">
+                <PriceTag product={p} size="sm" />
               </span>
             </button>
           ))}

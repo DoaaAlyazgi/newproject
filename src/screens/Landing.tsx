@@ -13,8 +13,9 @@ const RANGE = [
   { id: 'medals', art: 'medal', tone: 'gold' },
   { id: 'trophies', art: 'cup', tone: 'gold' },
   { id: 'crystal', art: 'crystal-star', tone: 'crystal' },
-  { id: 'vip', art: 'dhow', tone: 'gold' },
+  { id: 'plaques', art: 'plaque', tone: 'gold' },
   { id: 'replica', art: 'replica-cup', tone: 'gold' },
+  { id: 'vip', art: 'dhow', tone: 'gold' },
 ] as const;
 
 export default function Landing() {
@@ -99,6 +100,7 @@ export default function Landing() {
                   <ProductArt
                     art={p.art}
                     tone={p.tone}
+                    variant={p.id}
                     className="h-32 w-full transition-transform duration-500 ease-premium group-hover:scale-[1.05] sm:h-40 lg:h-48"
                   />
                   <figcaption className="mt-2 text-center">
@@ -137,7 +139,7 @@ export default function Landing() {
         <h2 className="font-display text-[1.5rem] font-medium text-ink sm:text-[1.85rem]">
           {t('landing.rangeTitle')}
         </h2>
-        <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
+        <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4">
           {RANGE.map((c) => (
             <button
               key={c.id}

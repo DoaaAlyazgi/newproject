@@ -275,6 +275,12 @@ export const strings: Dict = {
   'product.engravingText': { en: 'Engraving / printed text', ar: 'نص النقش أو الطباعة' },
   'product.engravingPlaceholder': { en: 'e.g. EMPLOYEE OF THE YEAR', ar: 'مثال: موظف العام' },
   'product.quantity': { en: 'Quantity', ar: 'الكمية' },
+  'product.sale': { en: 'Reduced', ar: 'مخفّض' },
+  'product.was': { en: 'Was', ar: 'كان' },
+  'product.notCustomizable': {
+    en: 'This item is supplied as a finished piece. The Global Medal team can confirm whether any personalisation is possible for it.',
+    ar: 'تُورَّد هذه القطعة جاهزة. يستطيع فريق جلوبال ميدال تأكيد ما إذا كان أي تخصيص ممكناً لها.',
+  },
   'product.optionsUnverified': {
     en: 'Colour and finish options for this piece are confirmed with the Global Medal team when your request is reviewed.',
     ar: 'يتم تأكيد خيارات اللون والتشطيب لهذه القطعة مع فريق جلوبال ميدال عند مراجعة طلبك.',
@@ -299,6 +305,8 @@ export const strings: Dict = {
   'category.medals': { en: 'Medals', ar: 'ميداليات' },
   'category.trophies': { en: 'Trophies', ar: 'كؤوس' },
   'category.crystal': { en: 'Crystal awards', ar: 'جوائز كريستال' },
+  'category.plaques': { en: 'Wooden plaques', ar: 'دروع خشبية' },
+  'category.bobbleheads': { en: 'Bobble heads', ar: 'مجسمات متحركة' },
   'category.vip': { en: 'VIP gifts', ar: 'هدايا كبار الشخصيات' },
   'category.replica': { en: 'World-renowned trophies', ar: 'كؤوس عالمية شهيرة' },
 
